@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
@@ -8,10 +9,12 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/comp
 import { Copy, QrCode, Link, SquareCode, User, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QRCodeGenerator from './QRCodeGenerator';
+
 interface LinkShareModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
+
 const LinkShareModal: React.FC<LinkShareModalProps> = ({
   isOpen,
   onClose
@@ -21,9 +24,8 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
   const [iframeLink, setIframeLink] = useState('<iframe src="https://example.com/embed" width="100%" height="400"></iframe>');
   const [anonymousLink, setAnonymousLink] = useState('https://anon.link/secret/abc123def');
   const [showQR, setShowQR] = useState<string | null>(null);
-  const {
-    toast
-  } = useToast();
+  const { toast } = useToast();
+
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
@@ -31,6 +33,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
       description: "Link has been copied to your clipboard."
     });
   };
+
   const getCurrentLink = () => {
     switch (activeTab) {
       case 'url':
@@ -43,11 +46,14 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
         return '';
     }
   };
+
   const canGenerateQR = activeTab !== 'iframe';
-  return <Dialog open={isOpen} onOpenChange={onClose}>
+
+  return (
+    <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-xl font-semibold">Public URL - {Form/Packet Name}</DialogTitle>
+          <DialogTitle className="text-xl font-semibold">Public URL - Form/Packet Name</DialogTitle>
         </DialogHeader>
         
         <TooltipProvider>
@@ -127,12 +133,16 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
             </TabsContent>
           </Tabs>
 
-          {showQR && canGenerateQR && <div className="mt-6 border-t pt-4">
+          {showQR && canGenerateQR && (
+            <div className="mt-6 border-t pt-4">
               <h3 className="text-lg font-medium mb-4">QR Code</h3>
               <QRCodeGenerator text={getCurrentLink()} onClose={() => setShowQR(null)} />
-            </div>}
+            </div>
+          )}
         </TooltipProvider>
       </DialogContent>
-    </Dialog>;
+    </Dialog>
+  );
 };
+
 export default LinkShareModal;
