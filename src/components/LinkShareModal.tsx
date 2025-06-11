@@ -1,11 +1,11 @@
-
 import React, { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Copy, QrCode, Link, SquareCode, User } from 'lucide-react';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { Copy, QrCode, Link, SquareCode, User, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QRCodeGenerator from './QRCodeGenerator';
 
@@ -48,121 +48,131 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({ isOpen, onClose }) => {
           <DialogTitle className="text-xl font-semibold">Share a link</DialogTitle>
         </DialogHeader>
         
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-          <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="url" className="flex items-center gap-2">
-              <Link className="w-4 h-4" />
-              URL Link
-            </TabsTrigger>
-            <TabsTrigger value="iframe" className="flex items-center gap-2">
-              <SquareCode className="w-4 h-4" />
-              Iframe
-            </TabsTrigger>
-            <TabsTrigger value="anonymous" className="flex items-center gap-2">
-              <User className="w-4 h-4" />
-              Anonymous
-            </TabsTrigger>
-          </TabsList>
+        <TooltipProvider>
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-3">
+              <TabsTrigger value="url" className="flex items-center gap-2">
+                <Link className="w-4 h-4" />
+                URL Link
+              </TabsTrigger>
+              <TabsTrigger value="iframe" className="flex items-center gap-2">
+                <SquareCode className="w-4 h-4" />
+                Iframe
+              </TabsTrigger>
+              <TabsTrigger value="anonymous" className="flex items-center gap-2">
+                <User className="w-4 h-4" />
+                Anonymous
+                <Tooltip>
+                  <TooltipTrigger asChild>
+                    <Info className="w-3 h-3 text-muted-foreground hover:text-foreground cursor-help" />
+                  </TooltipTrigger>
+                  <TooltipContent className="max-w-xs">
+                    <p>Anonymous links hide your identity and don't track who shared the content. Perfect for sharing sensitive information securely.</p>
+                  </TooltipContent>
+                </Tooltip>
+              </TabsTrigger>
+            </TabsList>
 
-          <TabsContent value="url" className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="url-link">URL Link</Label>
-              <div className="flex space-x-2">
-                <Input
-                  id="url-link"
-                  value={urlLink}
-                  onChange={(e) => setUrlLink(e.target.value)}
-                  className="flex-1"
-                  placeholder="Enter your URL"
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleCopy(urlLink)}
-                >
-                  <Copy className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowQR(showQR === 'url' ? null : 'url')}
-                >
-                  <QrCode className="w-4 h-4" />
-                </Button>
+            <TabsContent value="url" className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="url-link">URL Link</Label>
+                <div className="flex space-x-2">
+                  <Input
+                    id="url-link"
+                    value={urlLink}
+                    onChange={(e) => setUrlLink(e.target.value)}
+                    className="flex-1"
+                    placeholder="Enter your URL"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleCopy(urlLink)}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setShowQR(showQR === 'url' ? null : 'url')}
+                  >
+                    <QrCode className="w-4 h-4" />
+                  </Button>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Share your regular URL link.
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Share your regular URL link.
-              </p>
-            </div>
-          </TabsContent>
+            </TabsContent>
 
-          <TabsContent value="iframe" className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="iframe-link">Iframe Code</Label>
-              <div className="flex space-x-2">
-                <Input
-                  id="iframe-link"
-                  value={iframeLink}
-                  onChange={(e) => setIframeLink(e.target.value)}
-                  className="flex-1"
-                  placeholder="Enter your iframe code"
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleCopy(iframeLink)}
-                >
-                  <Copy className="w-4 h-4" />
-                </Button>
+            <TabsContent value="iframe" className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="iframe-link">Iframe Code</Label>
+                <div className="flex space-x-2">
+                  <Input
+                    id="iframe-link"
+                    value={iframeLink}
+                    onChange={(e) => setIframeLink(e.target.value)}
+                    className="flex-1"
+                    placeholder="Enter your iframe code"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleCopy(iframeLink)}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Share your iframe embed code for easy integration into websites. QR code generation is not available for iframe code.
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Share your iframe embed code for easy integration into websites. QR code generation is not available for iframe code.
-              </p>
-            </div>
-          </TabsContent>
+            </TabsContent>
 
-          <TabsContent value="anonymous" className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="anonymous-link">Anonymous Link</Label>
-              <div className="flex space-x-2">
-                <Input
-                  id="anonymous-link"
-                  value={anonymousLink}
-                  onChange={(e) => setAnonymousLink(e.target.value)}
-                  className="flex-1"
-                  placeholder="Enter your anonymous link"
-                />
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => handleCopy(anonymousLink)}
-                >
-                  <Copy className="w-4 h-4" />
-                </Button>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  onClick={() => setShowQR(showQR === 'anonymous' ? null : 'anonymous')}
-                >
-                  <QrCode className="w-4 h-4" />
-                </Button>
+            <TabsContent value="anonymous" className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="anonymous-link">Anonymous Link</Label>
+                <div className="flex space-x-2">
+                  <Input
+                    id="anonymous-link"
+                    value={anonymousLink}
+                    onChange={(e) => setAnonymousLink(e.target.value)}
+                    className="flex-1"
+                    placeholder="Enter your anonymous link"
+                  />
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => handleCopy(anonymousLink)}
+                  >
+                    <Copy className="w-4 h-4" />
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="icon"
+                    onClick={() => setShowQR(showQR === 'anonymous' ? null : 'anonymous')}
+                  >
+                    <QrCode className="w-4 h-4" />
+                  </Button>
+                </div>
+                <p className="text-sm text-muted-foreground">
+                  Share content anonymously without revealing your identity.
+                </p>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Share content anonymously without revealing your identity.
-              </p>
-            </div>
-          </TabsContent>
-        </Tabs>
+            </TabsContent>
+          </Tabs>
 
-        {showQR && canGenerateQR && (
-          <div className="mt-6 border-t pt-4">
-            <h3 className="text-lg font-medium mb-4">QR Code</h3>
-            <QRCodeGenerator 
-              text={getCurrentLink()} 
-              onClose={() => setShowQR(null)}
-            />
-          </div>
-        )}
+          {showQR && canGenerateQR && (
+            <div className="mt-6 border-t pt-4">
+              <h3 className="text-lg font-medium mb-4">QR Code</h3>
+              <QRCodeGenerator 
+                text={getCurrentLink()} 
+                onClose={() => setShowQR(null)}
+              />
+            </div>
+          )}
+        </TooltipProvider>
       </DialogContent>
     </Dialog>
   );
