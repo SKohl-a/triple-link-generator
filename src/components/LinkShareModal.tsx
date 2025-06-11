@@ -39,7 +39,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({ isOpen, onClose }) => {
     }
   };
 
-  const canGenerateQR = activeTab === 'anonymous';
+  const canGenerateQR = activeTab !== 'iframe';
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -82,9 +82,16 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({ isOpen, onClose }) => {
                 >
                   <Copy className="w-4 h-4" />
                 </Button>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setShowQR(showQR === 'url' ? null : 'url')}
+                >
+                  <QrCode className="w-4 h-4" />
+                </Button>
               </div>
               <p className="text-sm text-muted-foreground">
-                Share your regular URL link. QR code generation is not available for URL links.
+                Share your regular URL link.
               </p>
             </div>
           </TabsContent>
