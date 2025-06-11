@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Copy, QrCode, Link, IceCream, User } from 'lucide-react';
+import { Copy, QrCode, Link, SquareCode, User } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QRCodeGenerator from './QRCodeGenerator';
 
@@ -17,7 +17,7 @@ interface LinkShareModalProps {
 const LinkShareModal: React.FC<LinkShareModalProps> = ({ isOpen, onClose }) => {
   const [activeTab, setActiveTab] = useState('url');
   const [urlLink, setUrlLink] = useState('https://example.com/your-content');
-  const [iceCreamLink, setIceCreamLink] = useState('https://icecream.app/sweet-treats/12345');
+  const [iframeLink, setIframeLink] = useState('<iframe src="https://example.com/embed" width="100%" height="400"></iframe>');
   const [anonymousLink, setAnonymousLink] = useState('https://anon.link/secret/abc123def');
   const [showQR, setShowQR] = useState<string | null>(null);
   const { toast } = useToast();
@@ -33,7 +33,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({ isOpen, onClose }) => {
   const getCurrentLink = () => {
     switch (activeTab) {
       case 'url': return urlLink;
-      case 'icecream': return iceCreamLink;
+      case 'iframe': return iframeLink;
       case 'anonymous': return anonymousLink;
       default: return '';
     }
@@ -54,9 +54,9 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({ isOpen, onClose }) => {
               <Link className="w-4 h-4" />
               URL Link
             </TabsTrigger>
-            <TabsTrigger value="icecream" className="flex items-center gap-2">
-              <IceCream className="w-4 h-4" />
-              Ice Cream
+            <TabsTrigger value="iframe" className="flex items-center gap-2">
+              <SquareCode className="w-4 h-4" />
+              Iframe
             </TabsTrigger>
             <TabsTrigger value="anonymous" className="flex items-center gap-2">
               <User className="w-4 h-4" />
@@ -89,34 +89,34 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({ isOpen, onClose }) => {
             </div>
           </TabsContent>
 
-          <TabsContent value="icecream" className="space-y-4">
+          <TabsContent value="iframe" className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="icecream-link">Ice Cream Link</Label>
+              <Label htmlFor="iframe-link">Iframe Code</Label>
               <div className="flex space-x-2">
                 <Input
-                  id="icecream-link"
-                  value={iceCreamLink}
-                  onChange={(e) => setIceCreamLink(e.target.value)}
+                  id="iframe-link"
+                  value={iframeLink}
+                  onChange={(e) => setIframeLink(e.target.value)}
                   className="flex-1"
-                  placeholder="Enter your ice cream link"
+                  placeholder="Enter your iframe code"
                 />
                 <Button
                   variant="outline"
                   size="icon"
-                  onClick={() => handleCopy(iceCreamLink)}
+                  onClick={() => handleCopy(iframeLink)}
                 >
                   <Copy className="w-4 h-4" />
                 </Button>
                 <Button
                   variant="outline"
                   size="icon"
-                  onClick={() => setShowQR(showQR === 'icecream' ? null : 'icecream')}
+                  onClick={() => setShowQR(showQR === 'iframe' ? null : 'iframe')}
                 >
                   <QrCode className="w-4 h-4" />
                 </Button>
               </div>
               <p className="text-sm text-muted-foreground">
-                Share your sweet ice cream content with a special themed link.
+                Share your iframe embed code for easy integration into websites.
               </p>
             </div>
           </TabsContent>
