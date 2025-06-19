@@ -93,7 +93,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
                   <Copy className="w-4 h-4" />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">Copy & paste the code below into your html</p>
+              <p className="text-sm text-muted-foreground">Copy & paste the code into your html.</p>
             </div>
           </TabsContent>
 
