@@ -7,12 +7,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Copy, QrCode, Link, SquareCode, User, Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import QRCodeGenerator from './QRCodeGenerator';
-
 interface LinkShareModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
-
 const LinkShareModal: React.FC<LinkShareModalProps> = ({
   isOpen,
   onClose
@@ -22,8 +20,9 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
   const [iframeLink, setIframeLink] = useState('<iframe src="https://example.com/embed" width="100%" height="400"></iframe>');
   const [anonymousLink, setAnonymousLink] = useState('https://anon.link/secret/abc123def');
   const [showQR, setShowQR] = useState<string | null>(null);
-  const { toast } = useToast();
-
+  const {
+    toast
+  } = useToast();
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     toast({
@@ -31,7 +30,6 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
       description: "Link has been copied to your clipboard."
     });
   };
-
   const getCurrentLink = () => {
     switch (activeTab) {
       case 'url':
@@ -44,11 +42,8 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
         return '';
     }
   };
-
   const canGenerateQR = activeTab !== 'iframe';
-
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">Public URL - Form/Packet Name</DialogTitle>
@@ -98,9 +93,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
                   <Copy className="w-4 h-4" />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Share your iframe embed code for easy integration into websites. QR code generation is not available for iframe code.
-              </p>
+              <p className="text-sm text-muted-foreground">Copy & paste the code below into your html</p>
             </div>
           </TabsContent>
 
@@ -122,16 +115,12 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
             </div>
           </TabsContent>
 
-          {showQR && canGenerateQR && (
-            <div className="mt-6 border-t pt-4">
+          {showQR && canGenerateQR && <div className="mt-6 border-t pt-4">
               <h3 className="text-lg font-medium mb-4">QR Code</h3>
               <QRCodeGenerator text={getCurrentLink()} onClose={() => setShowQR(null)} />
-            </div>
-          )}
+            </div>}
         </Tabs>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
-
 export default LinkShareModal;
