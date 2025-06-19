@@ -111,13 +111,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
             </div>
           </TabsContent>
 
-          {showQR && canGenerateQR && <div className="mt-8 pt-6 border-t">
-              <div className="text-center mb-4">
-                <h3 className="text-lg font-medium text-foreground">QR Code</h3>
-                
-              </div>
-              <QRCodeGenerator text={getCurrentLink()} onClose={() => setShowQR(null)} />
-            </div>}
+          {showQR && canGenerateQR}
         </Tabs>
       </DialogContent>
     </Dialog>;
