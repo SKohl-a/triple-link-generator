@@ -109,7 +109,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
                   <QrCode className="w-4 h-4" />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">Removes the verification page before a form or packet.  </p>
+              <p className="text-sm text-muted-foreground">Removes the verification page before a form or packet. will not assign to a client.</p>
             </div>
           </TabsContent>
 
