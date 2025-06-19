@@ -43,8 +43,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
     }
   };
   const canGenerateQR = activeTab !== 'iframe';
-  return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+  return <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">Public URL - Form/Packet Name</DialogTitle>
@@ -112,18 +111,15 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
             </div>
           </TabsContent>
 
-          {showQR && canGenerateQR && (
-            <div className="mt-8 pt-6 border-t">
+          {showQR && canGenerateQR && <div className="mt-8 pt-6 border-t">
               <div className="text-center mb-4">
                 <h3 className="text-lg font-medium text-foreground">QR Code</h3>
-                <p className="text-sm text-muted-foreground mt-1">Share this QR code for quick access</p>
+                
               </div>
               <QRCodeGenerator text={getCurrentLink()} onClose={() => setShowQR(null)} />
-            </div>
-          )}
+            </div>}
         </Tabs>
       </DialogContent>
-    </Dialog>
-  );
+    </Dialog>;
 };
 export default LinkShareModal;
