@@ -25,7 +25,7 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ text, onClose }) => {
     
     try {
       await QRCode.toCanvas(canvasRef.current, text, {
-        width: 200,
+        width: 180,
         margin: 2,
         color: {
           dark: '#000000',
@@ -84,36 +84,40 @@ const QRCodeGenerator: React.FC<QRCodeGeneratorProps> = ({ text, onClose }) => {
   };
 
   return (
-    <Card className="w-full max-w-sm mx-auto">
-      <CardContent className="p-6">
-        <div className="flex flex-col items-center space-y-4">
-          <canvas ref={canvasRef} className="border rounded-lg" />
-          <div className="flex space-x-2">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={downloadQRCode}
-              className="flex items-center gap-2"
-            >
-              <Download className="w-4 h-4" />
-              Download
-            </Button>
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={copyQRCode}
-              className="flex items-center gap-2"
-            >
-              <Copy className="w-4 h-4" />
-              Copy
-            </Button>
+    <div className="flex justify-center">
+      <Card className="w-fit border-0 shadow-none bg-transparent">
+        <CardContent className="p-4">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="p-3 bg-white rounded-lg border shadow-sm">
+              <canvas ref={canvasRef} className="block" />
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={downloadQRCode}
+                className="flex items-center gap-2 h-8 px-3"
+              >
+                <Download className="w-3 h-3" />
+                Download
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={copyQRCode}
+                className="flex items-center gap-2 h-8 px-3"
+              >
+                <Copy className="w-3 h-3" />
+                Copy
+              </Button>
+            </div>
+            <p className="text-xs text-muted-foreground text-center max-w-48">
+              Scan this QR code to access the link
+            </p>
           </div>
-          <p className="text-xs text-muted-foreground text-center">
-            Scan this QR code to access the link
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 };
 
