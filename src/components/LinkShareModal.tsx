@@ -78,9 +78,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
                   <QrCode className="w-4 h-4" />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Share your regular URL link.
-              </p>
+              <p className="text-sm text-muted-foreground">Share the form link or add it to your website.</p>
             </div>
           </TabsContent>
 
