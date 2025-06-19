@@ -13,7 +13,7 @@ const Index = () => {
         <div className="space-y-4">
           <h1 className="text-4xl font-bold">Link Sharing Hub</h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Share your content with different types of links.
+            Share your content with different types of links. Generate QR codes for iframe and anonymous links.
           </p>
         </div>
         
@@ -29,6 +29,7 @@ const Index = () => {
           
           <div className="text-sm text-muted-foreground">
             <p>Choose from URL, Iframe, or Anonymous link types</p>
+            <p>QR codes available for Iframe and Anonymous links</p>
           </div>
         </div>
 
