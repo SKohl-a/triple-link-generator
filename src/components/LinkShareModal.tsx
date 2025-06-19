@@ -109,9 +109,7 @@ const LinkShareModal: React.FC<LinkShareModalProps> = ({
                   <QrCode className="w-4 h-4" />
                 </Button>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Share content anonymously without revealing your identity.
-              </p>
+              <p className="text-sm text-muted-foreground">Removes the verification page before a form or packet.  </p>
             </div>
           </TabsContent>
 
